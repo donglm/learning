@@ -1,0 +1,3 @@
+常用Windows命令
+1.查看某个dll被谁占用了
+tasklist /m dllname

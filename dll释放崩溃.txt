@@ -1,0 +1,13 @@
+  								dll释放崩溃
+
+原因： dll和exe中分配内存的堆不一样（一个模块对应一个堆，一个线程对应一个栈），故在exe 中释放dll中new/malloc 申请的内存导致崩溃。
+
+解决方法：
+1.在dll中加导出函数， exe中调用导出函数释放dll的内存；
+2.给堆分配和析构内存不用new/malloc, delete/free.使用
+：：HeapAlloc(::GetProcessHeap(),...)
+：：HeapFree(：：GetProcessHeap(),...)
+这两个API，这两个API分配的堆内存是进程级别的，这样可以在dll和exe是在同一地址空间，可以随意操作。
+
+PS：后面进一步学习一下这两个API
+
